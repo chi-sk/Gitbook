@@ -171,3 +171,53 @@ vector<vector<int>> combine(int n, int k) {
 }
 
 ```
+### 翻转单链表
+```cpp
+/*
+struct List {
+	int data;
+	List* next;
+};
+*/
+List* reverstlist(List* list)
+{
+	if (list == NULL || list->next == NULL)
+		return list;
+	List* p = list, * q = list->next, * r = q->next;
+	p->next = NULL;
+	while (q->next != NULL)
+	{
+		q->next = p;
+		p = q;
+		q = r;
+		r = r->next;
+	}
+	q->next = p;
+	return q;
+}
+```
+背包九讲
+```cpp
+#include "iostream"
+#include "cstring"
+#include "algorithm"
+using namespace std;
+ const int N = 1001;
+ 
+ int n,m;
+ int f[N];
+ int v[N],w[N];
+ 
+ int main()
+ {
+     cin>>n>>m;
+     for(int i = 1;i<=n;i++) cin>>v[i]>>w[i];
+     for(int i = 1;i<=n;i++)
+        for(int j = m; j>=v[i];j--)
+        {
+            f[j] = max(f[j],f[j-v[i]]+w[i]);
+        }
+    
+    cout<<f[m];
+ }
+```
