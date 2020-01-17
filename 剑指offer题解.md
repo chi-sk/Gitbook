@@ -1,31 +1,13 @@
-# 目录
+# 1. 目录
 <!-- TOC -->
 
 * [目录](#目录)
     * [第 7.1 节 剑指 Offer 题解](#第-71-节-剑指-offer-题解)
-        * [数组中重复的数字](#数组中重复的数字)
-            * [题目描述](#题目描述)
-            * [解题思路](#解题思路)
-        * [二维数组中的查找](#二维数组中的查找)
-            * [题目描述](#题目描述)
-            * [解题思路](#解题思路)
-        * [替换空格](#替换空格)
-            * [题目描述](#题目描述)
-            * [解题思路](#解题思路)
-        * [从尾到头打印链表](#从尾到头打印链表)
-            * [题目描述](#题目描述)
-            * [解题思路](#解题思路)
-                * [使用递归](#使用递归)
-                * [使用头插法](#使用头插法)
-                * [使用栈](#使用栈)
-        * [重建二叉树](#重建二叉树)
-            * [题目描述](#题目描述)
-            * [解题思路](#解题思路)
 
 <!-- /TOC -->
 
 
-## 第 7.1 节 剑指 Offer 题解
+## 1.1. 第 7.1 节 剑指 Offer 题解
 
 ### 3. 数组中重复的数字
 
@@ -1552,7 +1534,47 @@ public int min() {
 #### 解题思路
 
 使用一个栈来模拟压入弹出操作。
-
+**Java实现：**
+```cpp
+class Solution {
+public:
+    bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+        vector<int> temp;//辅助数组
+        for(int i=0,j=0;i<pushV.size();)
+        {
+            temp.push_back(pushV[i++]);
+            while(j<popV.size()&&temp.back()==popV[j])
+            {
+                temp.pop_back();
+                j++;
+            }
+        }
+        return temp.empty();
+    }
+};
+//解法2：
+class Solution {
+public:
+    bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+        stack<int> st;
+        int id=0;
+        for(int i=0;i<popV.size();++i){
+            while(st.empty()||st.top()!=popV[i]){
+                st.push(pushV[id++]);
+                if(id>pushV.size()){
+                    return false;
+                }
+            }
+            st.pop();
+        }
+        if(st.empty())
+            return true;
+        else
+            return false;
+    }
+};
+```
+**Java实现：**
 ```java
 public boolean IsPopOrder(int[] pushSequence, int[] popSequence) {
     int n = pushSequence.length;
@@ -1586,7 +1608,41 @@ public boolean IsPopOrder(int[] pushSequence, int[] popSequence) {
 使用队列来进行层次遍历。
 
 不需要使用两个队列分别存储当前层的节点和下一层的节点，因为在开始遍历一层的节点时，当前队列中的节点数就是当前层的节点数，只要控制遍历这么多节点数，就能保证这次遍历的都是当前层的节点。
-
+**C++解法**
+```cpp
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};*/
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+         
+        vector<int>  que;
+        queue<TreeNode*>q;
+        TreeNode* fr;
+        if(root == NULL) return que;
+        q.push(root);
+        while(!q.empty())
+        {
+        fr=q.front();
+        que.push_back(fr->val);
+        if(fr->left != NULL)
+            q.push(fr->left);
+        if(fr->right != NULL)
+            q.push(fr->right);
+        q.pop();
+        }
+ 
+       return que;
+    }
+};
+```
 ```java
 public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
     Queue<TreeNode> queue = new LinkedList<>();
