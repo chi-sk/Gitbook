@@ -128,13 +128,13 @@ tcp6       0      0 :::5903                 :::*                    LISTEN      
 pkill -9 vnc
  
 清空配置缓存（删除X1即可，也可以根据需要全部删除）
-[root@anbot .X11-unix]# ls /tmp/.X11-unix
+[root@wyx .X11-unix]# ls /tmp/.X11-unix
 X0  X1  X2  X3  X4  X5  X6
  
 保留config passwd xstartup即可
-[root@anbot .vnc]# ls /root/.vnc/
+[root@wyx .vnc]# ls /root/.vnc/
 config  wyx.pc.com:1.log  wyx.pc.com:2.pid  wyx.pc.com:3.pid  wyx.pc.com:4.pid
-passwd  anbot.pc.com:2.log  wyx.pc.com:3.log  wyx.pc.com:4.log  xstartup
+passwd  wyx.pc.com:2.log  wyx.pc.com:3.log  wyx.pc.com:4.log  xstartup
  
 现在可以通过systemd管理服务了
 systemctl start vncserver@:1.service

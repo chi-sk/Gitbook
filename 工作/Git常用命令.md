@@ -25,7 +25,7 @@ git commit -m "Those are test files !"
 ## 时光机穿梭
 1. 查看仓库的当前状态
 ```
-git ststus
+git status
 ```
 2. 查看当前未提交的文件做过哪些修改 
 ```
