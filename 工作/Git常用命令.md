@@ -155,42 +155,12 @@ git log --graph --pretty=oneline --abbrev-commit
 ```
 Git还提供一个stash功能，把当前的工作现场压栈，等以后恢复现场后继续工作。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
----
----
 ## 附
-在连接github时，执行”ssh -T git@github.com” 命令时，出现
+#### 在连接github时，执行”ssh -T git@github.com” 命令时，出现
 ```
 ssh: connect to host github.com port 22: Connection timed out
 ```
+**方案一：**
 在存放公钥私钥(id_rsa和id_rsa.pub)的文件里，新建config文本，内容如下：
 
 ```
@@ -215,9 +185,7 @@ Port 443
 再使用：ssh -T git@github.com来测试git是否成功连接github。
 
 ---
-**输入git remote add origin git@github.com:chi_sk/Git_ws.git**
-
-    提示出错信息：fatal: remote origin already exists.
+#### 输入`git remote add origin git@github.com:chi_sk/Git_ws.git`,提示出错信息：fatal: remote origin already exists.
 
     解决办法如下：
 
@@ -230,26 +198,19 @@ Port 443
     4、找到你的Github仓库路径，里面有一个隐藏文件夹.git
 
     5、打开里面的config文件，它把里面的[remote "origin"]那一行删掉就好了！
+#### 输入` ssh -T git@github.com`出现错误提示：`Permission denied (publickey)`.因为新生成的key不能加入ssh就会导致连接不上github。
 
-**如果输入$ ssh -T git@github.com**
-    出现错误提示：Permission denied (publickey).因为新生成的key不能加入ssh就会导致连接不上github。
-
-    解决办法如下：
-
+解决办法如下：
     1、先输入ssh-agent，再输入ssh-add  ~/.ssh/id_key，这样就可以了。
-
     2、如果还是不行的话，输入ssh-add ~/.ssh/id_key 命令后出现报错Could not open a connection to your authentication agent.解决方法是key用Git Gui的ssh工具生成，这样生成的时候key就直接保存在ssh中了，不需要再ssh-add命令加入了，其它的user，token等配置都用命令行来做。
+    3、最好检查一下在复制id_rsa.pub文件的内容时有没有产生多余的空格或空行，有些编辑器会帮你添加这些的。
 
-    3、最好检查一下在你复制id_rsa.pub文件的内容时有没有产生多余的空格或空行，有些编辑器会帮你添加这些的。
+#### 输入`git push origin master`提示出错信息：`error:failed to push som refs to .......`
 
- **如果输入git push origin master**
-    提示出错信息：error:failed to push som refs to .......
-    解决办法如下：
+解决办法如下：
     1、先输入git pull origin master //先把远程服务器github上面的文件拉下来
     2、再输入git push origin master
-
     3、如果出现报错 fatal: Couldn't find remote ref master或者fatal: 'origin' does not appear to be a git repository以及fatal: Could not read from remote repository.
-
     4、则需要重新输入$ git remote add origin git@github.com:djqiang/gitdemo.git
 
 
