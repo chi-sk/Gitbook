@@ -1,3 +1,63 @@
+### 快速找素数的一种方法
+```cpp
+
+int main() {
+    int n, i, j, tMin = 0x7fffffff;
+    vector<int> chart(50001, 1);
+    vector<int> prim;
+        for(chart[1] = 0, i = 2; i < chart.size(); i++) {
+        if(chart[i]) {
+            prim.push_back(i); // 依次把素数放进去
+            for(j = i*i; j < chart.size(); j += i)
+                chart[j] = 0;
+        }
+    }
+    for(auto m:prim) cout<<m<<" ";
+}
+
+```
+
+
+### 字典树的一种非常神奇的实现
+题目描述
+给出n个只包含小写字母'a'~'z'的字符串s1,s2,…sns_1,s_2,\dots s_ns1​,s2​,…sn​，我们称一个字符串sis_isi​为原根，当且仅当给出的其他任何字符串都不是它的前缀。
+
+现在牛牛想知道给出的字符串中有多少个原根。
+（相同字符串互为前缀） 
+示例1 
+3,["a","ab","ba"]
+输出: 2
+说明:
+
+
+"a"是原根
+因为"a"是"ab"的前缀，所以"ab"不是原根
+"ba"是原根
+
+
+```cpp
+#include <numeric>
+ 
+class Solution {
+public:
+    int solve(int n, vector<string>& s) {
+        vector<vector<int>> trie(1, vector<int>(26));
+        vector<int> a(1);
+        for (auto si: s) {
+            int i = 0, j = 0;
+            while (j < si.length() && trie[i][si[j] - 'a']) i = trie[i][si[j++] - 'a'];
+            a[i] = 0;
+            while (j < si.length()) {
+                i = trie[i][si[j++] - 'a'] = trie.size();
+                trie.push_back(vector<int>(26));
+                a.push_back(j == si.length());
+            }
+        }
+        return accumulate(a.begin(), a.end(), 0);
+    }
+};
+```
+
 
 ### 不使用加法运算求两个整数的和
 ```cpp
